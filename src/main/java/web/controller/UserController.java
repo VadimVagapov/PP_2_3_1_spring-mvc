@@ -15,7 +15,6 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    //@RequestMapping("/")
     @GetMapping("/")
     public String home(Model model) {
         List<User> listUsers = userService.getListUsers("-1");
@@ -32,6 +31,9 @@ public class UserController {
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public String saveUser(@ModelAttribute("user") User user) {
+        if (user.getEmail().isEmpty() && user.getName().isEmpty() && user.getLastname().isEmpty()) {
+            return "redirect:/";
+        }
         userService.add(user);
         return "redirect:/";
     }
