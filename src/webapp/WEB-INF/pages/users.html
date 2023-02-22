@@ -1,49 +1,31 @@
 <!DOCTYPE html>
-<!--<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">-->
-<!--<html lang="en">-->
-<!--<head>-->
-<!--    <meta charset="UTF-8">-->
-<!--    <title>Cars</title>-->
-<!--</head>-->
-<!--<body>-->
-
-
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <title>Таблица</title>
-  <style type="text/css">
-    TABLE {
-      width: 300px; /* Ширина таблицы */
-      border-collapse: collapse; /* Убираем двойные линии между ячейками */
-    }
-    TD, TH {
-      padding: 3px; /* Поля вокруг содержимого таблицы */
-      border: 1px solid black; /* Параметры рамки */
-    }
-    TH {
-      background: #b0e0e6; /* Цвет фона */
-    }
-  </style>
+  <meta charset="UTF-8">
+  <title>Users</title>
 </head>
 <body>
-
-<table>
-  <thead>
-  <tr>
-    <th> User </th>
-    <th> User </th>
-    <th> User </th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr th:each="user : ${users}">
-    <td><span th:text="${user.id}"> Id </span></td>
-    <td><span th:text="${user.name}"> Name </span></td>
-    <td><span th:text="${user.lastname}"> Lastname </span></td>
-    <td><span th:text="${user.email}"> Email </span></td>
-  </tr>
-  </tbody>
-</table>
+<div align="center">
+  <h2>Found the following users:</h2>
+  <h3><a href="/">Return</a></h3>
+  <table border="1" cellpadding="5">
+    <tr>
+      <th>Id</th>
+      <th>Name</th>
+      <th>LastName</th>
+      <th>E-mail</th>
+    </tr>
+    <tr th:if="${users.isEmpty()}">
+      <td colspan="4"> There are no such users </td>
+    </tr>
+    <tr th:each="user : ${users}">
+      <td><span th:text="${user.id}"> Id </span></td>
+      <td><span th:text="${user.name}"> Name </span></td>
+      <td><span th:text="${user.lastname}"> LastName </span></td>
+      <td><span th:text="${user.email}"> Email </span></td>
+    </tr>
+  </table>
+</div>
 </body>
 </html>

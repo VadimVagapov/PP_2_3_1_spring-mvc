@@ -18,7 +18,7 @@ public class UserController {
     //@RequestMapping("/")
     @GetMapping("/")
     public String home(Model model) {
-        List<User> listUsers = userService.getListUsers(-1);
+        List<User> listUsers = userService.getListUsers("-1");
         model.addAttribute("listUsers", listUsers);
         return "index";
     }
@@ -54,9 +54,12 @@ public class UserController {
         return "redirect:/";
     }
 
-    @GetMapping("/users") //позже сделаю поиск пользователей по id для себя
-    public String getListUsers(@RequestParam(defaultValue = "-1") String count, Model model) {
-        model.addAttribute("users", userService.getListUsers(Integer.valueOf(count)));
+    @RequestMapping("/search") //позже сделаю поиск пользователей по id для себя
+    public String getListUsers(@RequestParam(defaultValue = "0") String keyword, Model model) {
+        if (keyword.equals("0")) {
+            return "redirect:/";
+        }
+        model.addAttribute("users", userService.getListUsers(keyword));
         return "users";
     }
 }

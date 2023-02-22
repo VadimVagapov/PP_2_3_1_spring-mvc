@@ -6,6 +6,7 @@ import web.model.User;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.ArrayList;
 import java.util.List;
 
 @Qualifier("users")
@@ -40,12 +41,24 @@ public class UserDaoImp implements UserDao {
 
     @SuppressWarnings("unchecked")
     @Override
-    public List<User> getListUsers(int count) {
-        List<User> list = (List<User>) entityManager.createQuery("FROM User").getResultList();
-        if (count == -1) {
-            return list;
+    public List<User> getListUsers(String count) {
+        List<User> list1 = (List<User>) entityManager.createQuery("FROM User").getResultList();
+        if (count.matches("^-?\\d+$")) {
+            int id = Integer.parseInt(count);
+            if (id < 0) {
+                return list1;
+            }
+            User user = findUser(id);
+            List<User> list2 = new ArrayList<User>();
+            list2.add(user);
+            return list2;
         }
-        return list.stream().limit(count).toList();
+
+        return list1.stream()
+                .filter(x -> x.getName().toLowerCase().equals(count)
+                        || x.getLastname().toLowerCase().equals(count)
+                        || x.getEmail().toLowerCase().equals(count))
+                .toList();
 
     }
 }

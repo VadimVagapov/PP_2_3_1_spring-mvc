@@ -35,7 +35,7 @@ public class UserServiceImp implements UserService {
     }
 
     @Override
-    public List<User> getListUsers(int count) {
+    public List<User> getListUsers(String count) {
         return userDao.getListUsers(count);
     }
 }
